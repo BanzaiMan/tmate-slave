@@ -8,6 +8,7 @@
 #include <libssh/callbacks.h>
 #include <event.h>
 #include <time.h>
+#include <errno.h>
 
 #include "tmux.h"
 struct tmate_session;
@@ -23,7 +24,7 @@ extern void printflike(2, 3) tmate_log(int level, const char *msg, ...);
 #define tmate_warn(str, ...)	tmate_log(LOG_WARNING, str, ##__VA_ARGS__)
 #define tmate_fatal(str, ...)					\
 ({								\
-	tmate_log(LOG_CRIT, "fatal: " str, ##__VA_ARGS__);	\
+	tmate_log(LOG_CRIT, "fatal: " str, " ", strerror(errno), ##__VA_ARGS__);	\
  	exit(1);						\
 })
 
